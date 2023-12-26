@@ -1,4 +1,4 @@
 A simple python script that:
-    Scrapes reviews from an Amazon page
-    Performs sentiment analysis on those reviews
-    Optionally exports sentiment analysis values to Excel file
+    1) Scrapes reviews from an Amazon page.
+    2) Performs sentiment analysis on those reviews.
+    3) Optionally exports sentiment analysis values to Excel file.
