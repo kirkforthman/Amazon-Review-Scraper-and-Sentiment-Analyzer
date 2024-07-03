@@ -69,11 +69,14 @@ if __name__ == '__main__':
     soup = html_code(url)
 
     def reviews(soup):
-        data_string = ''
-        for item in soup.find_all('div', class_='a-row a-spacing-small review-data'):
-            data_string = data_string + item.get_text()
-        result = data_string.split('\n')
-        return result
+        data_string = ""
+        for item in soup.find_all("div", class_="a-row a-spacing-small review-data"):
+            data_string += item.get_text()
+        result = data_string.split("\n")
+        for item in result:
+            if item.lower() == '' or 'read more':
+                result.remove(item)
+    return result
 
     review_data = reviews(soup)
     review_result = []
@@ -108,12 +111,14 @@ if __name__ == '__main__':
         review_number += 1
 
     # aggregate results
-    net_polarity = raw_polarity / (review_number - invalid_language_count)
-    net_subjectivity = raw_subjectivity / (review_number - invalid_language_count - 1)
-    print(f'\nPAGE TOTAL AGGREGATES:\n'
-          f'\tThe average page values of {review_number - invalid_language_count - 1} reviews are:\n'
-          f'\tAverage Polarity: {net_polarity}\n'
-          f'\tAverage Subjectivity: {net_subjectivity}\n')
+    net_polarity = self.raw_polarity / (review_number - 1)
+    net_subjectivity = self.raw_subjectivity / (review_number - 1)
+    self.result_text.append(
+        f"\nPAGE TOTAL AGGREGATES:\n"
+        f"\tThe average page values of {(review_number - 1)} reviews are:\n"
+        f"\tAverage Polarity: {net_polarity}\n"
+        f"\tAverage Subjectivity: {net_subjectivity}\n"
+    )
 
     # optional export data
     save_to_file = input('Save to File? (Y)es / (N)o:\n>')
